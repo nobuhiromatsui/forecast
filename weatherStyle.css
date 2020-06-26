@@ -1,0 +1,18 @@
+.fiveDaysdisplay {
+    background-color: rgb(183, 183, 255);
+    width:15%;
+    float: left;
+    margin:1%;
+    padding:5px;
+    border-radius: 2px;
+}
+
+h1 {
+    width: 60%;
+    margin: 0;
+    clear:right;
+}
+
+.uvAlert {
+    background-color: mediumvioletred;
+}
