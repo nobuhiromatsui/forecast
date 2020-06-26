@@ -16,3 +16,7 @@ h1 {
 .uvAlert {
     background-color: mediumvioletred;
 }
+
+.btn btn-primary btn-lg btn-block {
+    background: white;
+}

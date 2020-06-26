@@ -2,7 +2,8 @@ $("document").ready(function () {
     console.log("Hello World")
 
     var today = new Date();
-    var date = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + today.getDate();
+    var date = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
+    var apiKey = "d9d510d60f97d35c269584bef800f1b0";
 
 
     $("#search").on("click", function (event) {
@@ -12,27 +13,58 @@ $("document").ready(function () {
 
         //basic weather query url
         var queryUrl = "http://api.openweathermap.org/data/2.5/weather?q=";
-        var apiKey = "d9d510d60f97d35c269584bef800f1b0";
-
         queryUrl += searchCity + "&appid=" + apiKey;
         console.log(queryUrl);
-
 
         //5 days query url
         var fiveDaysquery = "http://api.openweathermap.org/data/2.5/forecast?q=";
         fiveDaysquery += searchCity + "&appid=" + apiKey;
+        console.log(fiveDaysquery);
 
+        callApi(queryUrl);
+        fiveDays(fiveDaysquery);
+        localStorage.setItem("city2", searchCity);
 
         // search history
-        var searchHis = $("<div>");
+        var searchHis = $("<div>").attr("id", "subclick");
         var searchHisDisplay = $("<p>");
         var hisDisplay = searchHisDisplay.text(searchCity);
         searchHis.append(hisDisplay);
-        $(".SerchHistory").append(searchHis);
+        $(".SerchHistory").prepend(searchHis);
+
+        $("#subclick").on("click", function (event) {
+            event.preventDefault();
+
+            var subSearchCity = $(this).text();
+            console.log(subSearchCity);
+
+            //basic weather query url
+            var queryUrl2 = "http://api.openweathermap.org/data/2.5/weather?q=";
+            queryUrl2 += subSearchCity + "&appid=" + apiKey;
+            console.log(queryUrl2);
+
+            var fiveDaysquery2 = "http://api.openweathermap.org/data/2.5/forecast?q=";
+            fiveDaysquery2 += subSearchCity + "&appid=" + apiKey;
+            console.log(fiveDaysquery2);
+
+
+            clear();
+            callApi(queryUrl2);
+            fiveDays(fiveDaysquery2);
+        })
+
+    })
 
 
 
-        //bascia weather api call 
+
+
+
+
+
+    //bascia weather api call 
+
+    function callApi(queryUrl) {
         $.ajax({
             url: queryUrl,
             method: "GET"
@@ -43,9 +75,10 @@ $("document").ready(function () {
             var iconNum = response.weather[0].icon;
             var iconUrl = "http://openweathermap.org/img/wn/" + iconNum + "@2x.png";
             var iconImg = $("<img>").attr("src", iconUrl);
+            localStorage.setItem("icon", iconNum);
 
             //Display date
-            var cityName = $("<h1>").text(response.name + "" + date);
+            var cityName = $("<h1>").text(response.name + "   " + date);
             var Hum = $("<h5>").text("Humidity" + " " + response.main.humidity + "%");
             var temp = $("<h5>").text("Temp" + " " + (Math.round(response.main.temp - 273.15)) + "°C");
             var wind = $("<h5>").text("wind" + " " + response.wind.speed + "MPH");
@@ -53,6 +86,8 @@ $("document").ready(function () {
 
             var lon = response.coord.lon;
             var lat = response.coord.lat;
+
+            console.log(lon);
             //UV query url
             var queryurlUv = "http://api.openweathermap.org/data/2.5/uvi/forecast?"
             queryurlUv += "lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
@@ -66,23 +101,24 @@ $("document").ready(function () {
                 var uvVal2 = $("<h5>").text("UV index: " + response[0].value);
                 $(".selectedCityResult").append(uvVal2);
                 localStorage.setItem("uv", response[0].value);
-                if ( uvVal2 > 5 ) {
-                   uvVal.css("background-color","red");
+                if (uvVal2 > 5) {
+                    uvVal.css("background-color", "red");
+                    console.log(uvVal);
                 }
 
             });
-
             localStorage.setItem("city", response.name);
-            localStorage.setItem("icon", response.main.humidity);
-            localStorage.setItem("hum", (Math.round(response.main.temp - 273.15)));
-            localStorage.setItem("temp",response.wind.speed);
-            localStorage.setItem("wind",response.wind.speed);
+            localStorage.setItem("hum", response.main.humidity);
+            localStorage.setItem("temp", (Math.round(response.main.temp - 273.15)));
+            localStorage.setItem("wind", response.wind.speed);
         });
+    }
 
 
 
 
-        // 5 days weather api call
+    // 5 days weather api call
+    function fiveDays(fiveDaysquery) {
         $.ajax({
             url: fiveDaysquery,
             method: "GET"
@@ -112,25 +148,49 @@ $("document").ready(function () {
                 fiveDyasDisplay.append(daysDisplay, smallIconImg, humDis, tempDis);
                 $(".fiveDays").append(fiveDyasDisplay);
             }
-            localStorage.setItem("day",dateFive);
-            localStorage.setItem("smallhum",response.list[i].main.humidity);
-            localStorage.setItem("smallTemp", Math.round(response.list[i].main.temp - 273.15));
-            localStorage.setItem("day",dateFive);
-
-
         });
-    })
+    }
 
-
-    
-
+// clear weather result
     function clear() {
         $(".selectedCityResult").empty();
         $(".fiveDays").empty();
     }
 
 
-    
+// call back localstorage
+    function keep() {
+        var city = $("<h1>");
+        var cityText = localStorage.getItem("city");
+        city = city.text(cityText + date);
+
+        var icon = $("<img>");
+        var iconImg = localStorage.getItem("icon");
+        var iconUrl = "http://openweathermap.org/img/wn/" + iconImg + "@2x.png";
+        icon = $("<img>").attr("src", iconUrl);
+
+
+        var hum = $("<h5>");
+        var humText = localStorage.getItem("hum");
+        hum = hum.text("Humidity" + " " + humText + "%");
+
+        var temp = $("<h5>");
+        var tempText = localStorage.getItem("temp");
+        temp = temp.text("Temp" + " " + tempText);
+
+        var wind = $("<h5>");
+        var windText = localStorage.getItem("wind");
+        wind = wind.text("wind" + " " + windText + "MPH");
+
+        var uv = $("<h5>");
+        var uvText = localStorage.getItem("uv");
+        uv = uv.text("UV index: " + uvText);
+
+        $(".selectedCityResult").append(city, icon, hum, temp, wind, uv);
+    }
+
+    keep();
+
 
 });
 
