@@ -57,11 +57,6 @@ $("document").ready(function () {
 
 
 
-
-
-
-
-
     //bascia weather api call 
 
     function callApi(queryUrl) {
@@ -96,14 +91,18 @@ $("document").ready(function () {
                 url: queryurlUv,
                 method: "GET"
             }).then(function (response) {
-                var uvVal = $("<h5>").addClass("uvAlert");
-
+                var uvVal = $("<div>").addClass("uvAlert");
                 var uvVal2 = $("<h5>").text("UV index: " + response[0].value);
-                $(".selectedCityResult").append(uvVal2);
+                var uvIndex = response[0].value;
+                uvVal.append(uvVal2);
+                $(".selectedCityResult").append(uvVal);
                 localStorage.setItem("uv", response[0].value);
-                if (uvVal2 > 5) {
-                    uvVal.css("background-color", "red");
+                if (uvIndex > 5) {
+                    uvVal.css("color", "red");
                     console.log(uvVal);
+                }
+                else {
+                    uvVal.css("color", "green");
                 }
 
             });
@@ -124,8 +123,9 @@ $("document").ready(function () {
             method: "GET"
         }).then(function (response) {
             console.log(response);
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 40; i+=8) {
 
+                
                 // icon display setting
                 var smallIconNum = response.list[i].weather[0].icon;
                 var smalliconUrl = "http://openweathermap.org/img/wn/" + smallIconNum + "@2x.png";
@@ -133,7 +133,7 @@ $("document").ready(function () {
 
                 var fiveDyasDisplay = $("<div>").addClass("fiveDaysdisplay");
                 // date display setting
-                var dateFive = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + (today.getDate() + i);
+                var dateFive = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + (today.getDate() + i /8);
 
                 // making container for api data
                 var fiveDaysHolder = $("<p>");
@@ -147,6 +147,7 @@ $("document").ready(function () {
 
                 fiveDyasDisplay.append(daysDisplay, smallIconImg, humDis, tempDis);
                 $(".fiveDays").append(fiveDyasDisplay);
+                console.log(response.list[i]);
             }
         });
     }
@@ -162,7 +163,7 @@ $("document").ready(function () {
     function keep() {
         var city = $("<h1>");
         var cityText = localStorage.getItem("city");
-        city = city.text(cityText + date);
+        city = city.text(cityText + " " + date);
 
         var icon = $("<img>");
         var iconImg = localStorage.getItem("icon");
@@ -185,8 +186,17 @@ $("document").ready(function () {
         var uv = $("<h5>");
         var uvText = localStorage.getItem("uv");
         uv = uv.text("UV index: " + uvText);
+        console.log(uvText);
+
+        if (uvText > 5){
+            uv.css("color", "red");
+        }
+        else {
+            uv.css("color", "green");
+        }
 
         $(".selectedCityResult").append(city, icon, hum, temp, wind, uv);
+        
     }
 
     keep();
