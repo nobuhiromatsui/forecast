@@ -68,7 +68,7 @@ $("document").ready(function () {
 
             // Wearther icon url
             var iconNum = response.weather[0].icon;
-            var iconUrl = "https://cors-anywhere.herokuapp.com/http://openweathermap.org/img/wn/" + iconNum + "@2x.png";
+            var iconUrl = "http://openweathermap.org/img/wn/" + iconNum + "@2x.png";
             var iconImg = $("<img>").attr("src", iconUrl);
             localStorage.setItem("icon", iconNum);
 
