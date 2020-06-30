@@ -12,12 +12,12 @@ $("document").ready(function () {
         var searchCity = $("#searcCity").val().trim();
 
         //basic weather query url
-        var queryUrl = "http://api.openweathermap.org/data/2.5/weather?q=";
+        var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=";
         queryUrl += searchCity + "&appid=" + apiKey;
         console.log(queryUrl);
 
         //5 days query url
-        var fiveDaysquery = "http://api.openweathermap.org/data/2.5/forecast?q=";
+        var fiveDaysquery = "https://api.openweathermap.org/data/2.5/forecast?q=";
         fiveDaysquery += searchCity + "&appid=" + apiKey;
         console.log(fiveDaysquery);
 
@@ -39,11 +39,11 @@ $("document").ready(function () {
             console.log(subSearchCity);
 
             //basic weather query url
-            var queryUrl2 = "http://api.openweathermap.org/data/2.5/weather?q=";
+            var queryUrl2 = "https://api.openweathermap.org/data/2.5/weather?q=";
             queryUrl2 += subSearchCity + "&appid=" + apiKey;
             console.log(queryUrl2);
 
-            var fiveDaysquery2 = "http://api.openweathermap.org/data/2.5/forecast?q=";
+            var fiveDaysquery2 = "https://api.openweathermap.org/data/2.5/forecast?q=";
             fiveDaysquery2 += subSearchCity + "&appid=" + apiKey;
             console.log(fiveDaysquery2);
 
@@ -68,7 +68,7 @@ $("document").ready(function () {
 
             // Wearther icon url
             var iconNum = response.weather[0].icon;
-            var iconUrl = "http://openweathermap.org/img/wn/" + iconNum + "@2x.png";
+            var iconUrl = "https://openweathermap.org/img/wn/" + iconNum + "@2x.png";
             var iconImg = $("<img>").attr("src", iconUrl);
             localStorage.setItem("icon", iconNum);
 
@@ -84,7 +84,7 @@ $("document").ready(function () {
 
             console.log(lon);
             //UV query url
-            var queryurlUv = "http://api.openweathermap.org/data/2.5/uvi/forecast?"
+            var queryurlUv = "https://api.openweathermap.org/data/2.5/uvi/forecast?"
             queryurlUv += "lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
             // UV api call
             $.ajax({
@@ -128,7 +128,7 @@ $("document").ready(function () {
                 
                 // icon display setting
                 var smallIconNum = response.list[i].weather[0].icon;
-                var smalliconUrl = "http://openweathermap.org/img/wn/" + smallIconNum + "@2x.png";
+                var smalliconUrl = "https://openweathermap.org/img/wn/" + smallIconNum + "@2x.png";
                 var smallIconImg = $("<img>").attr("src", smalliconUrl);
 
                 var fiveDyasDisplay = $("<div>").addClass("fiveDaysdisplay");
@@ -167,7 +167,7 @@ $("document").ready(function () {
 
         var icon = $("<img>");
         var iconImg = localStorage.getItem("icon");
-        var iconUrl = "http://openweathermap.org/img/wn/" + iconImg + "@2x.png";
+        var iconUrl = "https://openweathermap.org/img/wn/" + iconImg + "@2x.png";
         icon = $("<img>").attr("src", iconUrl);
 
 
