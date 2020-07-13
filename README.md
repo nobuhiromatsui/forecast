@@ -9,3 +9,9 @@ Basic weather infomation and 5days weather forecast are displayed.
 
 Searched Cities are displayed on the left column.
 When the seached city is clicked, the weather infomation of the city displays again.
+
+<h2>Technical details<h2>
+Bootstrap
+Google font
+jQuery
+openweathermap API
