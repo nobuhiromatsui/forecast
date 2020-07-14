@@ -16,4 +16,8 @@ When the seached city is clicked, the weather infomation of the city displays ag
 <li>Google font</li>
 <li>jQuery</li>
 <li>openweathermap API</li>
-  </ul
+  </ul>
+  
+ <img src="../forecast/img/weather.png" alt="forecast">
+
+
