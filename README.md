@@ -1,23 +1,27 @@
-# forecast app
+# Weather app
 
 deploy site: https://nobuhiromatsui.github.io/forecast/
 
-Weather app with utlising OpenWeather API.
+This applicartion allows you to display weather you would like to see.
 
-When you type the name of the city in search bar, 
-Basic weather infomation and 5days weather forecast are displayed.
+<h3>how to use</h3>
+Type a city in search bar and press the button next the search bar.
+
+The city weather of the day and next 5 days weather forecast will display. 
 
 Searched Cities are displayed on the left column.
 When the seached city is clicked, the weather infomation of the city displays again.
 
 <h2>Technical details</h2>
 <ul>
- <li>Bootstrap</li>
+<li>Bootstrap</li>
 <li>Google font</li>
 <li>jQuery</li>
 <li>openweathermap API</li>
-  </ul>
+<li>HtML</li>
+ <li>CSS</li>
+</ul>
   
- <img src="../forecast/img/weather.png" alt="forecast">
+ <img src="https://nobuhiromatsui.github.io/forecast/img/forecastAPP.png" alt="forecast">
 
 
