@@ -5,7 +5,7 @@ deploy site: https://nobuhiromatsui.github.io/forecast/
 This applicartion allows you to display weather you would like to see.
 
 <h3>how to use</h3>
-Type a city in search bar and press the button next the search bar.
+Type a city in the search bar and press the "click" button.
 
 The city weather of the day and next 5 days weather forecast will display. 
 
